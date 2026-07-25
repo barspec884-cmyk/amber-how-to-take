@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Whisky Drinking Style Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1008;--paper:#f5f0e8;--amber:#c8882a;--amber-light:#e8b96a;--amber-pale:#f5e4c0;--smoke:#8a7a6a;--deep:#3a2810;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif JP',serif;min-height:100vh;padding:32px 16px 80px;overflow-x:hidden;}
+.container{max-width:760px;margin:0 auto;}
+header{text-align:center;padding:50px 20px 30px;margin-bottom:40px;background:rgba(255,255,255,0.4);border-radius:8px;position:relative;}
+header::before,header::after{content:'';display:block;height:2px;background:linear-gradient(90deg,transparent,var(--amber),transparent);margin:14px auto;width:80%;}
+.global-lang{position:absolute;top:14px;right:14px;display:flex;gap:4px;}
+.gl-btn{padding:5px 12px;font-size:.68rem;font-weight:700;border:1.5px solid var(--amber);background:#fff;color:var(--amber);border-radius:4px;cursor:pointer;transition:.2s;letter-spacing:.05em;}
+.gl-btn.active{background:var(--amber);color:#fff;}
+.gl-btn:not(.active):hover{background:rgba(200,136,42,.1);}
+.subtitle{font-size:.72rem;letter-spacing:.4em;color:var(--deep);margin-bottom:10px;text-transform:uppercase;font-weight:700;}
+h1{font-family:'Shippori Mincho',serif;font-size:clamp(1.5rem,6vw,2.2rem);letter-spacing:.15em;color:var(--deep);}
+h1 span{color:var(--amber);text-shadow:1px 1px 0px rgba(255,255,255,0.8);}
+.category-label{display:flex;align-items:center;gap:10px;margin:36px 0 16px;padding:0 4px;font-family:'Shippori Mincho',serif;font-size:clamp(.85rem,2.5vw,1.05rem);color:var(--deep);letter-spacing:.12em;font-weight:700;}
+.category-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--amber),transparent);}
+.section{margin:16px 0;background:rgba(255,255,255,.6);border:1px solid rgba(200,136,42,.2);border-radius:4px;overflow:hidden;box-shadow:3px 3px 16px rgba(58,40,16,.06);}
+.section-header{display:flex;align-items:center;gap:14px;padding:18px 22px;background:linear-gradient(135deg,var(--deep),#5a3a18);cursor:pointer;transition:.3s;}
+.section-header:hover{opacity:.9;}
+.section-number{font-family:'Shippori Mincho',serif;font-size:1.8rem;color:var(--amber-light);}
+.section-title{font-size:clamp(.85rem,2.5vw,1rem);font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.section-title small{display:block;font-size:.72rem;color:#f0d898;margin-top:3px;font-weight:400;letter-spacing:.04em;}
+.toggle-icon{margin-left:auto;color:var(--amber-light);transition:.3s;}
+.section-body{padding:20px 22px;display:none;}
+.section-hint{font-size:.78rem;color:var(--smoke);margin-bottom:14px;line-height:1.6;}
+.add-free-btn{background:var(--deep);color:var(--amber-light);border:none;padding:11px 14px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:.2s;}
+.add-free-btn:active{background:var(--amber);color:#fff;}
+@keyframes tagPop{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* ── Drinking Style Selection ── */
+.style-selected-preview{margin-bottom:16px;padding:14px;background:rgba(255,255,255,.5);border:1.5px solid rgba(200,136,42,.3);border-radius:8px;min-height:60px;transition:.3s;scroll-margin-top:12px;}
+.style-empty-state{color:var(--smoke);font-size:.85rem;padding:8px 0;}
+.style-preview-card{display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:center;}
+.style-preview-icon{width:78px;height:78px;border-radius:10px;background:rgba(245,240,232,.65);border:1px solid rgba(200,136,42,.15);display:flex;align-items:center;justify-content:center;}
+.style-preview-icon svg{width:64px;height:64px;}
+.style-preview-name{font-family:'Shippori Mincho',serif;font-size:1.18rem;font-weight:700;color:var(--deep);}
+.style-preview-en{font-size:.78rem;color:var(--smoke);margin-top:2px;}
+.style-preview-tag{display:inline-block;margin-top:7px;padding:3px 8px;border:1px solid rgba(200,136,42,.4);border-radius:99px;font-size:.66rem;font-weight:700;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;}
+.style-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.style-card{position:relative;background:rgba(255,255,255,.7);border:1.5px solid rgba(200,136,42,.25);border-radius:8px;padding:12px 9px 11px;cursor:pointer;text-align:center;transition:.2s;color:var(--ink);font-family:inherit;}
+.style-card:hover{background:rgba(255,255,255,.94);border-color:var(--amber);transform:translateY(-1px);}
+.style-card.active{background:var(--amber-pale);border-color:var(--amber);box-shadow:inset 0 0 0 1px rgba(200,136,42,.15);}
+.style-card-no{position:absolute;top:7px;left:9px;font-family:'Shippori Mincho',serif;font-size:.72rem;color:var(--amber);font-weight:700;}
+.style-card-icon{width:100%;height:82px;border-radius:6px;background:rgba(245,240,232,.5);border:1px solid rgba(200,136,42,.1);display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
+.style-card-icon svg{width:62px;height:62px;}
+.style-card-jp{font-family:'Shippori Mincho',serif;font-size:.91rem;font-weight:700;color:var(--deep);line-height:1.3;}
+.style-card-en{font-size:.68rem;color:var(--smoke);margin-top:3px;line-height:1.3;}
+.style-card-tag{font-size:.64rem;color:var(--amber);margin-top:6px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.style-detail-section{margin-top:14px;padding-top:14px;border-top:1px solid rgba(200,136,42,.2);}
+.style-detail-block+.style-detail-block{margin-top:12px;}
+.style-detail-label{font-family:'Shippori Mincho',serif;font-size:.76rem;font-weight:700;color:var(--amber);margin-bottom:5px;letter-spacing:.08em;}
+.style-detail-text{font-size:.8rem;color:var(--deep);line-height:1.72;}
+.style-ratio{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:5px 9px;border-radius:6px;background:rgba(58,40,16,.07);font-size:.72rem;font-weight:700;color:var(--deep);}
+@media(max-width:420px){
+  .style-preview-card{grid-template-columns:68px 1fr;gap:11px}.style-preview-icon{width:68px;height:68px}.style-preview-icon svg{width:56px;height:56px}
+  .style-card-icon{height:74px}.style-card-icon svg{width:56px;height:56px}.style-card-jp{font-size:.84rem}.style-card-en{font-size:.64rem}
+}
+
+footer{text-align:center;margin-top:60px;padding-top:20px;border-top:1px solid rgba(200,136,42,.1);font-size:.7rem;color:var(--smoke);letter-spacing:.1em;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 飲み方選択 -->
+<div class="section" id="sec-00">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-title" id="ui-t00">飲み方<small>Drinking Style — ウイスキーの愉しみ方を選択</small></div>
+    <div class="toggle-icon">⌃</div>
+  </div>
+  <div class="section-body" style="display:block;">
+    <p class="section-hint" id="ui-sh00">好みの飲み方を選んでください。温度・加水・炭酸・氷によって、香りと味わいの印象が変わります。</p>
+    <div class="style-selected-preview" id="stylePreview">
+      <div class="style-empty-state">未選択 — 下の飲み方から1つ選んでください</div>
+    </div>
+    <div class="style-grid" id="styleGrid"></div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="add-free-btn" id="ui-style-reset" onclick="resetStyle()" style="flex:1;">リセット</button>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   🥃 Drinking Style Selection
+   ═══════════════════════════════════════════ */
+const DRINKING_STYLES = [
+  {code:'neat',no:'01',jp:'ストレート／ニート',en:'Straight / Neat',tagJa:'本質を味わう',tagEn:'Essential',
+   descJa:'常温のウイスキーをそのまま注ぎ、香り・甘み・余韻を最も直接的に味わう。チェイサーを添える。',
+   descEn:'Whisky served neat at room temperature to reveal its aroma, sweetness and finish most directly. Serve with a water chaser.',
+   serviceJa:'テイスティンググラスまたはショットグラスに適量を注ぐ。氷・水・炭酸は加えない。',
+   serviceEn:'Pour into a tasting or shot glass. Do not add ice, water or soda.',ratioJa:'加水なし',ratioEn:'No dilution'},
+  {code:'float',no:'02',jp:'ウイスキー・フロート',en:'Whisky Float',tagJa:'層を愉しむ',tagEn:'Layered',
+   descJa:'水またはソーダの上にウイスキーを静かに浮かべ、飲み進めるにつれて濃度と香りの変化を愉しむ。',
+   descEn:'Whisky is gently floated over water or soda, creating a layered drink whose strength and aroma evolve as you sip.',
+   serviceJa:'先に水またはソーダを注ぎ、バースプーンを伝わせてウイスキーをゆっくり重ねる。',
+   serviceEn:'Pour water or soda first, then slowly layer whisky over the back of a bar spoon.',ratioJa:'層を崩さず提供',ratioEn:'Serve layered'},
+  {code:'rocks',no:'03',jp:'ロック',en:'On the Rocks',tagJa:'冷やして味わう',tagEn:'Chilled',
+   descJa:'大きな氷でゆっくり冷やし、温度低下と希釈による味わいの変化を時間とともに愉しむ。',
+   descEn:'Whisky is slowly chilled over a large ice cube, letting you follow the changing flavour as temperature drops and dilution increases.',
+   serviceJa:'ロックグラスに大きな氷を入れ、ウイスキーを注いで軽くステアする。',
+   serviceEn:'Place one large ice cube in a rocks glass, add whisky and stir gently.',ratioJa:'大きな氷 1個',ratioEn:'1 large ice cube'},
+  {code:'highball',no:'04',jp:'ハイボール',en:'Highball',tagJa:'爽快',tagEn:'Sparkling',
+   descJa:'ウイスキーを強炭酸で割り、香りを軽やかに立たせる爽快な飲み方。食事にも合わせやすい。',
+   descEn:'Whisky lengthened with lively soda water for a crisp, aromatic and food-friendly serve.',
+   serviceJa:'氷を入れた背の高いグラスにウイスキーを注ぎ、よく冷やしてからソーダを静かに加える。',
+   serviceEn:'Add whisky to an ice-filled tall glass, chill well, then gently top with soda.',ratioJa:'ウイスキー 1：ソーダ 3〜4',ratioEn:'Whisky 1 : Soda 3–4'},
+  {code:'kobe',no:'05',jp:'神戸式ハイボール',en:'Kobe Style Highball',tagJa:'伝統',tagEn:'Traditional',
+   descJa:'氷を使わず、よく冷やしたグラス・ウイスキー・ソーダで仕上げる、切れ味のよいハイボール。',
+   descEn:'A clean, sharply chilled highball made without ice, using a thoroughly chilled glass, whisky and soda.',
+   serviceJa:'冷凍または十分に冷やしたグラスに冷えたウイスキーを注ぎ、冷えたソーダを加える。',
+   serviceEn:'Pour chilled whisky into a thoroughly chilled glass and top with cold soda. No ice.',ratioJa:'氷なし',ratioEn:'No ice'},
+  {code:'halfrock',no:'06',jp:'ハーフロック',en:'Half Rock',tagJa:'バランス',tagEn:'Balanced',
+   descJa:'ウイスキーと水を同量で合わせ、氷で冷やす。ストレートの厚みと水割りの柔らかさを両立する。',
+   descEn:'Equal parts whisky and water served over ice, balancing the body of a neat pour with the softness of mizuwari.',
+   serviceJa:'ロックグラスに氷を入れ、ウイスキーと水を同量注いで軽くステアする。',
+   serviceEn:'Add ice to a rocks glass, pour equal parts whisky and water, then stir gently.',ratioJa:'ウイスキー 1：水 1',ratioEn:'Whisky 1 : Water 1'},
+  {code:'mizuwari',no:'07',jp:'水割り',en:'Whisky and Water',tagJa:'なめらか',tagEn:'Smooth',
+   descJa:'ウイスキーを冷水で適度に希釈し、アルコールの刺激を抑えて香味をなめらかに整える。',
+   descEn:'Whisky diluted with chilled water to soften alcohol heat and create a smooth, composed flavour.',
+   serviceJa:'氷を入れたグラスでウイスキーを冷やし、水を加えて丁寧にステアする。',
+   serviceEn:'Chill whisky over ice, add water and stir carefully until integrated.',ratioJa:'ウイスキー 1：水 2〜2.5',ratioEn:'Whisky 1 : Water 2–2.5'},
+  {code:'twiceup',no:'08',jp:'トワイスアップ',en:'Twice Up',tagJa:'香りを分析',tagEn:'Analysis',
+   descJa:'ウイスキーと常温の水を同量で合わせ、氷を使わない。香りを開かせ、原酒の個性を確認しやすい。',
+   descEn:'Equal parts whisky and room-temperature water, served without ice to open the aroma and reveal the spirit’s character.',
+   serviceJa:'テイスティンググラスにウイスキーと常温水を同量注ぎ、静かになじませる。',
+   serviceEn:'Combine equal parts whisky and room-temperature water in a tasting glass. No ice.',ratioJa:'ウイスキー 1：常温水 1',ratioEn:'Whisky 1 : Water 1'},
+  {code:'mist',no:'09',jp:'ミスト',en:'Mist',tagJa:'清涼感',tagEn:'Refreshing',
+   descJa:'クラッシュドアイスをたっぷり使い、急速に冷やして軽快に愉しむ。暑い季節にも向く。',
+   descEn:'Whisky served over plenty of crushed ice for rapid chilling and a light, refreshing texture.',
+   serviceJa:'グラスにクラッシュドアイスを山盛りにし、ウイスキーを注ぐ。必要に応じてレモンピールを添える。',
+   serviceEn:'Fill the glass with crushed ice and pour over the whisky. Lemon peel may be added.',ratioJa:'クラッシュドアイス',ratioEn:'Crushed ice'},
+  {code:'frozen',no:'10',jp:'フローズン・ウイスキー',en:'Frozen Whisky',tagJa:'とろりと冷たい',tagEn:'Silky',
+   descJa:'ウイスキーを冷凍庫でしっかり冷やし、粘性のある滑らかな口当たりを引き出す。',
+   descEn:'Whisky thoroughly chilled in a freezer, developing a denser, silkier texture without adding dilution.',
+   serviceJa:'ボトルを冷凍庫で十分に冷やし、冷えたグラスへそのまま注ぐ。',
+   serviceEn:'Chill the bottle thoroughly in a freezer and pour directly into a cold glass.',ratioJa:'加水なし・低温',ratioEn:'Undiluted & very cold'},
+  {code:'hot',no:'11',jp:'ホット・ウイスキー',en:'Hot Whisky',tagJa:'温まる',tagEn:'Warming',
+   descJa:'温水で割ることで香りを大きく開かせ、柔らかな甘みと温かさを愉しむ。',
+   descEn:'Whisky lengthened with hot water, opening the aroma while highlighting warmth and gentle sweetness.',
+   serviceJa:'耐熱グラスを温め、ウイスキーを注いでから80℃前後のお湯を加える。',
+   serviceEn:'Pre-warm a heatproof glass, add whisky, then pour in hot water at around 80°C.',ratioJa:'ウイスキー 1：お湯 2〜3',ratioEn:'Whisky 1 : Hot water 2–3'},
+  {code:'cocktail',no:'12',jp:'カクテル',en:'Cocktail',tagJa:'無限の表現',tagEn:'Unlimited',
+   descJa:'副材料や技法を組み合わせ、ウイスキーの個性を別の角度から引き出す飲み方。',
+   descEn:'Whisky combined with other ingredients and techniques to express its character from a different angle.',
+   serviceJa:'レシピに従い、ステア・シェイク・ビルドなど適切な技法で仕上げる。',
+   serviceEn:'Prepare according to the recipe using the appropriate technique: stirred, shaken or built.',ratioJa:'レシピによる',ratioEn:'Recipe dependent'}
+];
+
+function styleSvg(code){
+  const common=`fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"`;
+  const amber=`fill="rgba(200,136,42,.34)" stroke="currentColor" stroke-width="3"`;
+  const icons={
+    neat:`<rect x="24" y="30" width="43" height="61" rx="4" ${common}/><path d="M27 69h37v17H27z" ${amber}/><rect x="78" y="56" width="19" height="34" rx="3" ${common}/><path d="M81 78h13" ${common}/>`,
+    float:`<path d="M34 20h50l-5 79H39z" ${common}/><path d="M39 62h40l-2 34H41z" fill="rgba(110,165,190,.18)" stroke="none"/><path d="M37 43h45l-1 19H38z" fill="rgba(200,136,42,.48)" stroke="none"/><path d="M91 40v26m-5-20 5-6 5 6m-10 14 5 6 5-6" ${common}/>`,
+    rocks:`<path d="M24 39h71l-7 58H31z" ${common}/><path d="M31 69h57l-3 25H34z" ${amber}/><path d="m43 52 14-11 13 13-12 15zM68 58l13-10 10 13-12 14z" fill="rgba(190,220,230,.35)" stroke="currentColor" stroke-width="3"/>`,
+    highball:`<path d="M35 16h48l-4 88H39z" ${common}/><path d="M40 55h39l-2 46H42z" ${amber}/><path d="m46 52 12-12 13 13-10 15zM53 76l13-11 10 12-11 15z" fill="rgba(210,230,235,.34)" stroke="currentColor" stroke-width="3"/><circle cx="72" cy="31" r="2" fill="currentColor"/><circle cx="62" cy="24" r="1.6" fill="currentColor"/><circle cx="77" cy="41" r="1.5" fill="currentColor"/>`,
+    kobe:`<path d="M31 19h46l-3 83H34z" ${common}/><path d="M35 50h39l-2 49H37z" ${amber}/><circle cx="45" cy="68" r="1.6" fill="currentColor"/><circle cx="59" cy="77" r="1.6" fill="currentColor"/><circle cx="67" cy="59" r="1.6" fill="currentColor"/><path d="M89 58h13v40H86zM92 48h7v10" ${common}/>`,
+    halfrock:`<path d="M25 42h69l-7 55H32z" ${common}/><path d="M31 70h57l-3 24H34z" ${amber}/><path d="m45 55 13-11 12 13-11 14z" fill="rgba(210,230,235,.36)" stroke="currentColor" stroke-width="3"/><path d="M22 25h75M27 20v10M92 20v10" ${common}/><text x="47" y="18" font-size="13" fill="currentColor" font-family="sans-serif">1:1</text>`,
+    mizuwari:`<path d="M28 35h65l-7 62H35z" ${common}/><path d="M34 67h53l-3 27H37z" fill="rgba(200,136,42,.22)" stroke="currentColor" stroke-width="2"/><path d="m43 51 13-10 11 12-10 14zM67 48l11-9 9 11-10 13z" fill="rgba(210,230,235,.38)" stroke="currentColor" stroke-width="3"/><path d="M18 48v39m-5-34 5-5 5 5m-10 29 5 5 5-5" ${common}/>`,
+    twiceup:`<path d="M39 20h43c0 24-5 38-17 44v26h16c7 0 10 5 10 9H30c0-4 3-9 10-9h16V64C44 58 39 44 39 20z" ${common}/><path d="M42 45h37c-2 9-6 15-14 19H56c-8-4-12-10-14-19z" ${amber}/><text x="87" y="57" font-size="13" fill="currentColor" font-family="sans-serif">1:1</text>`,
+    mist:`<path d="M25 44h70l-7 54H32z" ${common}/><path d="M31 68h58l-4 27H35z" ${amber}/><g fill="rgba(210,230,235,.45)" stroke="currentColor" stroke-width="2"><circle cx="39" cy="49" r="6"/><circle cx="50" cy="43" r="7"/><circle cx="62" cy="49" r="6"/><circle cx="73" cy="42" r="7"/><circle cx="83" cy="50" r="6"/><circle cx="51" cy="58" r="6"/><circle cx="73" cy="58" r="6"/></g>`,
+    frozen:`<path d="M21 28h48v24H21z" ${common} transform="rotate(20 45 40)"/><path d="M66 49c14 8 18 15 18 25" ${common}/><path d="M43 61h47l-4 38H47z" ${common}/><path d="M48 79h38l-2 17H50z" ${amber}/><path d="M96 20v20M86 30h20M89 23l14 14M103 23 89 37" ${common}/>`,
+    hot:`<path d="M28 49h55v47H34z" ${common}/><path d="M83 61h10c10 0 11 20 0 20H84" ${common}/><path d="M34 69h49v24H36z" ${amber}/><path d="M43 39c-8-8 8-12 0-20M58 39c-8-8 8-12 0-20M73 39c-8-8 8-12 0-20" ${common}/>`,
+    cocktail:`<path d="M16 30h37L35 53v30h13M22 83h26" ${common}/><path d="M20 34h29L35 49z" ${amber}/><path d="M69 31h21l7 24H62zM66 26h20M70 20h12" ${common}/><path d="M72 65h30v32H72z" ${common}/><path d="M75 79h24v15H75z" ${amber}/><path d="M101 72c8-5 10-10 8-15" ${common}/>`
+  };
+  return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="color:var(--deep)">${icons[code]||''}</svg>`;
+}
+
+let selectedStyleCode='';
+function styleText(s,key){return LANG==='ja'?s[key+'Ja']:s[key+'En'];}
+function styleName(s){return LANG==='ja'?s.jp:s.en;}
+
+function renderStyleGrid(){
+  const grid=document.getElementById('styleGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  DRINKING_STYLES.forEach(s=>{
+    const card=document.createElement('button');
+    card.type='button';
+    card.className='style-card'+(selectedStyleCode===s.code?' active':'');
+    card.innerHTML=`<div class="style-card-no">${s.no}</div><div class="style-card-icon">${styleSvg(s.code)}</div><div class="style-card-jp">${s.jp}</div><div class="style-card-en">${s.en}</div><div class="style-card-tag">${styleText(s,'tag')}</div>`;
+    card.addEventListener('click',()=>{
+      selectedStyleCode=s.code;
+      renderStylePreview();
+      renderStyleGrid();
+      const pv=document.getElementById('stylePreview');
+      if(pv){const r=pv.getBoundingClientRect();if(r.top<0||r.bottom>window.innerHeight)pv.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+    grid.appendChild(card);
+  });
+}
+
+function renderStylePreview(){
+  const preview=document.getElementById('stylePreview');
+  if(!preview)return;
+  const s=DRINKING_STYLES.find(x=>x.code===selectedStyleCode);
+  if(!s){
+    preview.innerHTML=`<div class="style-empty-state">${LANG==='ja'?'未選択 — 下の飲み方から1つ選んでください':'Not selected — choose a drinking style below'}</div>`;
+    return;
+  }
+  const tasteLabel=LANG==='ja'?'特徴':'Character';
+  const serviceLabel=LANG==='ja'?'作り方／提供方法':'Service';
+  const ratioLabel=LANG==='ja'?'目安':'Guide';
+  preview.innerHTML=`<div class="style-preview-card">
+    <div class="style-preview-icon">${styleSvg(s.code)}</div>
+    <div><div class="style-preview-name">${styleName(s)}</div><div class="style-preview-en">${LANG==='ja'?s.en:s.jp}</div><div class="style-preview-tag">${styleText(s,'tag')}</div></div>
+  </div>
+  <div class="style-detail-section">
+    <div class="style-detail-block"><div class="style-detail-label">${tasteLabel}</div><div class="style-detail-text">${styleText(s,'desc')}</div></div>
+    <div class="style-detail-block"><div class="style-detail-label">${serviceLabel}</div><div class="style-detail-text">${styleText(s,'service')}</div><div class="style-ratio"><span>${ratioLabel}</span><span>｜</span><span>${styleText(s,'ratio')}</span></div></div>
+  </div>`;
+}
+
+function resetStyle(){selectedStyleCode='';renderStylePreview();renderStyleGrid();}
+
+
+/* ═══════════════════════════════════════════
+   Global State & i18n
+   ═══════════════════════════════════════════ */
+let LANG = 'ja';
+
+const UI={
+  ja:{
+    h1:'<span>ウイスキーの飲み方</span>',
+    cat0:'🥃 飲み方を選ぶ',
+    t00:'飲み方<small>Drinking Style — ウイスキーの愉しみ方を選択</small>',
+    sh00:'好みの飲み方を選んでください。温度・加水・炭酸・氷によって、香りと味わいの印象が変わります。',
+    styleReset:'リセット'
+  },
+  en:{
+    h1:'<span>Ways to Enjoy Whisky</span>',
+    cat0:'🥃 Choose a Drinking Style',
+    t00:'Drinking Style<small>Choose how you would like to enjoy the whisky</small>',
+    sh00:'Choose a drinking style. Temperature, dilution, carbonation and ice all change the aroma and flavour.',
+    styleReset:'Reset'
+  }
+};
+
+function refreshAll(){
+  const u=UI[LANG];
+  const setHtml=(id,val)=>{const el=document.getElementById(id);if(el)el.innerHTML=val;};
+  const setText=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setHtml('ui-h1',u.h1);
+  setText('ui-cat0',u.cat0);
+  setHtml('ui-t00',u.t00);
+  setText('ui-sh00',u.sh00);
+  setText('ui-style-reset',u.styleReset);
+  renderStylePreview();
+  renderStyleGrid();
+  document.querySelectorAll('.gl-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim()===(LANG==='ja'?'JP':'EN'));
+  });
+  document.documentElement.lang=LANG;
+}
+
+function setLang(lang){
+  LANG=lang;
+  refreshAll();
+}
+
+function toggleSection(header){
+  const body=header.nextElementSibling;
+  const icon=header.querySelector('.toggle-icon');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  if(icon)icon.style.transform=open?'rotate(0)':'rotate(180deg)';
+}
+
+document.addEventListener('DOMContentLoaded',refreshAll);
+</script>
+</body>
+</html>
