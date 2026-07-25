@@ -181,7 +181,7 @@ function styleSvg(code){
     mist:`<path d="M25 44h70l-7 54H32z" ${common}/><path d="M31 68h58l-4 27H35z" ${amber}/><g fill="rgba(58,40,16,.045)" stroke="currentColor" stroke-width="2"><circle cx="39" cy="49" r="6"/><circle cx="50" cy="43" r="7"/><circle cx="62" cy="49" r="6"/><circle cx="73" cy="42" r="7"/><circle cx="83" cy="50" r="6"/><circle cx="51" cy="58" r="6"/><circle cx="73" cy="58" r="6"/></g>`,
     frozen:`<path d="M21 28h48v24H21z" ${common} transform="rotate(20 45 40)"/><path d="M66 49c14 8 18 15 18 25" ${common}/><path d="M43 61h47l-4 38H47z" ${common}/><path d="M48 79h38l-2 17H50z" ${amber}/><path d="M96 20v20M86 30h20M89 23l14 14M103 23 89 37" ${common}/>`,
     hot:`<path d="M28 49h55v47H34z" ${common}/><path d="M83 61h10c10 0 11 20 0 20H84" ${common}/><path d="M34 69h49v24H36z" ${amber}/><path d="M43 39c-8-8 8-12 0-20M58 39c-8-8 8-12 0-20M73 39c-8-8 8-12 0-20" ${common}/>`,
-    cocktail:`<path d="M16 30h37L35 53v30h13M22 83h26" ${common}/><path d="M20 34h29L35 49z" ${amber}/><path d="M66 99L70 55H98L102 99Z" ${common}/><path d="M69 74h30l1 25H68z" ${amber}/><path d="M68 55C68 42 100 42 100 55Z" ${common}/><path d="M80 45C80 37 90 37 90 45Z" ${common}/>`
+    cocktail:`<path d="M32 25H88" ${common}/><path d="M32 25L56 54C57 57 57.5 58 57.5 61" ${common}/><path d="M88 25L64 54C63 57 62.5 58 62.5 61" ${common}/><path d="M57.5 61C57 76 56.5 90 56 96" ${common}/><path d="M62.5 61C63 76 63.5 90 64 96" ${common}/><ellipse cx="60" cy="100" rx="15" ry="4" ${common}/><path d="M38 30H82L60 56Z" ${amber}/>`
   };
   return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="color:var(--deep)">${icons[code]||''}</svg>`;
 }
