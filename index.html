@@ -35,6 +35,16 @@ h1 span{color:var(--amber);text-shadow:1px 1px 0px rgba(255,255,255,0.8);}
 .toggle-icon{margin-left:auto;color:var(--amber-light);transition:.3s;}
 .section-body{padding:20px 22px;display:none;}
 .section-hint{font-size:.78rem;color:var(--smoke);margin-bottom:14px;line-height:1.6;}
+.selection-notice{
+  margin:-4px 0 14px;
+  padding:9px 12px;
+  background:rgba(200,136,42,.08);
+  border-left:3px solid var(--amber);
+  border-radius:0 4px 4px 0;
+  color:var(--smoke);
+  font-size:.72rem;
+  line-height:1.6;
+}
 .add-free-btn{background:var(--deep);color:var(--amber-light);border:none;padding:11px 14px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:.2s;}
 .add-free-btn:active{background:var(--amber);color:#fff;}
 @keyframes tagPop{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
@@ -86,6 +96,7 @@ footer{text-align:center;margin-top:60px;padding-top:20px;border-top:1px solid r
   </div>
   <div class="section-body" style="display:block;">
     <p class="section-hint" id="ui-sh00">好みの飲み方を選んでください。温度・加水・炭酸・氷によって、香りと味わいの印象が変わります。</p>
+    <div class="selection-notice" id="ui-selection-notice">※このページで選んだ飲み方は、元のアプリには反映されません。飲み方を知るためのガイドとしてご利用ください。</div>
     <div class="style-selected-preview" id="stylePreview">
       <div class="style-empty-state">未選択 — 下の飲み方から1つ選んでください</div>
     </div>
@@ -245,6 +256,7 @@ const UI={
     cat0:'🥃 飲み方を選ぶ',
     t00:'飲み方<small>Drinking Style — ウイスキーの愉しみ方を選択</small>',
     sh00:'好みの飲み方を選んでください。温度・加水・炭酸・氷によって、香りと味わいの印象が変わります。',
+    selectionNotice:'※このページで選んだ飲み方は、元のアプリには反映されません。飲み方を知るためのガイドとしてご利用ください。',
     styleReset:'リセット'
   },
   en:{
@@ -252,6 +264,7 @@ const UI={
     cat0:'🥃 Choose a Drinking Style',
     t00:'Drinking Style<small>Choose how you would like to enjoy the whisky</small>',
     sh00:'Choose a drinking style. Temperature, dilution, carbonation and ice all change the aroma and flavour.',
+    selectionNotice:'The drinking style selected on this page is not reflected in the original app. Please use this page as a guide.',
     styleReset:'Reset'
   }
 };
@@ -264,6 +277,7 @@ function refreshAll(){
   setText('ui-cat0',u.cat0);
   setHtml('ui-t00',u.t00);
   setText('ui-sh00',u.sh00);
+  setText('ui-selection-notice',u.selectionNotice);
   setText('ui-style-reset',u.styleReset);
   renderStylePreview();
   renderStyleGrid();
